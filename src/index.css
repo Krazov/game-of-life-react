@@ -1,0 +1,96 @@
+:root {
+    --selection: 1vh;
+}
+
+body {
+    /* TODO: no select */
+    text-align: center;
+}
+
+table {
+    margin: auto;
+}
+
+td {
+    border-radius:  0.5vh;
+    color:          #000;
+    cursor:         pointer;
+    height:         5vh;
+    text-align:     center;
+    vertical-align: middle;
+    text-shadow:    0 0 0.1vh #fff;
+    transition:     background-color 250ms ease;
+    width:          5vh;
+}
+
+td[data-life] {
+    background-color: #000;
+}
+
+td[data-life="0"] {
+    background-color: #fff;
+}
+
+td[data-life="1"] {
+    background-color: #eee;
+}
+
+td[data-life="2"] {
+    background-color: #ddd;
+}
+
+td[data-life="3"] {
+    background-color: #ccc;
+}
+
+td[data-life="4"] {
+    background-color: #bbb;
+}
+
+td[data-life="5"] {
+    background-color: #aaa;
+}
+
+td[data-life="6"] {
+    background-color: #999;
+}
+
+td[data-life="7"] {
+    background-color: #888;
+}
+
+td[data-life="8"] {
+    background-color: #777;
+}
+
+td[data-life="9"] {
+    background-color: #666;
+}
+
+td[data-life="10"] {
+    background-color: #555;
+}
+
+td[data-life="11"] {
+    background-color: #444;
+}
+
+td[data-life="12"] {
+    background-color: #333;
+}
+
+td[data-life="13"] {
+    background-color: #222;
+}
+
+td[data-life="14"] {
+    background-color: #111;
+}
+
+td[data-life="15"] {
+    background-color: #000;
+}
+
+td:hover {
+    box-shadow: 0 0 var(--selection) black, 0 0 var(--selection) black inset;
+}
