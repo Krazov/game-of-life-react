@@ -2,23 +2,49 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Game() {
-    const HEADER = 'Game of Life';
-
-    return (
-        <React.Fragment>
-            <h1>{HEADER}</h1>
-            <Table size={15}/>
-        </React.Fragment>
-    );
-}
-
-class Table extends React.Component {
+class Game extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            cells: Array.from({length: props.size ** 2}, () => 0)
+            running: false
+        };
+    }
+
+    render() {
+        const HEADER = 'Game of Life';
+
+        return (
+            <React.Fragment>
+                <h1>{HEADER}</h1>
+                <Board
+                    size={15}
+                    running={this.state.running}
+                />
+                <Controls
+                    toStart={this.startGame.bind(this)}
+                    toStop={this.stopGame.bind(this)}
+                />
+            </React.Fragment>
+        );
+    }
+
+    startGame() {
+        this.setState({running: true});
+    }
+
+    stopGame() {
+        this.setState({running: false});
+    }
+}
+
+class Board extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            cells:  Array.from({length: props.size ** 2}, () => 0),
+            timeId: 0
         };
     }
 
@@ -46,8 +72,38 @@ class Table extends React.Component {
         );
     }
 
+    componentWillReceiveProps({running = false}) {
+        if (running) {
+            this.startTicking();
+        } else {
+            this.stopTicking();
+        }
+    }
+
+    startTicking() {
+        this.setState({
+            timeId: setTimeout(this.performTic.bind(this), 1000)
+        });
+    }
+
+    performTic() {
+        console.log('Tic');
+
+        this.setState({
+            timeId: setTimeout(this.performTic.bind(this), 1000)
+        });
+    }
+
+    stopTicking() {
+        clearTimeout(this.state.timeId);
+
+        this.setState({
+            timeId: 0
+        });
+    }
+
     handleClick(index) {
-        this.setState({cells: Table.toggleState(this.state.cells, index)});
+        this.setState({cells: Board.toggleState(this.state.cells, index)});
     }
 
     static toggleState(cells, index) {
@@ -57,12 +113,24 @@ class Table extends React.Component {
     }
 }
 
-function Cell(props) {
+function Cell({life, onClick}) {
     return (
         <td
-            data-life={props.life}
-            onClick={props.onClick}
-        >{props.life}</td>
+            data-life={life}
+            onClick={onClick}
+        >{life}</td>
+    );
+}
+
+function Controls(props) {
+    const START = 'Start';
+    const STOP  = 'Stop';
+
+    return (
+        <React.Fragment>
+            <button onClick={() => props.toStart()}>{START}</button>
+            <button onClick={() => props.toStop()}>{STOP}</button>
+        </React.Fragment>
     );
 }
 
