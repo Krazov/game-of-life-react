@@ -103,13 +103,15 @@ class Board extends React.Component {
     }
 
     handleClick(index) {
-        this.setState({cells: Board.toggleState(this.state.cells, index)});
+        this.setState(Board.toggleState(this.state.cells, index));
     }
 
     static toggleState(cells, index) {
-        return Object.assign(cells.slice(), {
-            [index]: cells[index] === 0 ? 1 : 0
-        });
+        return {
+            cells: Object.assign(cells.slice(), {
+                [index]: cells[index] === 0 ? 1 : 0
+            })
+        };
     }
 }
 
